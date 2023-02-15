@@ -1,10 +1,24 @@
 import { useState } from 'react'
+import { useEffect } from 'react'
 import axios from 'axios'
+
+//Components
+import ImageList from './components/ImageList'
 
 export default function App() {
   const [file, setFile] = useState()
   const [description, setDescription] = useState("")
   const[imageName, setImageName] = useState()
+  const[images, setImages] = useState([])
+
+  useEffect(() => {
+    async function getImages() {
+      const result = await axios.get('/api/images')
+      console.log(result.data.images)
+      setImages(result.data.images)
+    }
+    getImages()
+  }, [])
 
   const submit = async event => {
     event.preventDefault()
@@ -33,6 +47,7 @@ export default function App() {
         ></input>
         <button type="submit">Submit</button>
       </form>
+      <ImageList images={images} />
     </div>
   )
 }
