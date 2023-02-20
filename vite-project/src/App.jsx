@@ -14,8 +14,9 @@ export default function App() {
   useEffect(() => {
     async function getImages() {
       const result = await axios.get('/api/images')
-      console.log(result.data.images)
+      
       setImages(result.data.images)
+      console.log("images" + result.data.images)
     }
     getImages()
   }, [])
@@ -29,11 +30,13 @@ export default function App() {
     formData.append("description", description)
 
     const result = await axios.post('/api/images', formData, { headers: {'Content-Type': 'multipart/form-data'}})
-    setImageName(result.data.imageName)
+    console.log(result.data)
+    //setImageName(result.data.imageName)
   }
 
   return (
     <div className="App">
+      
       <form onSubmit={submit}>
         <input
           filename={file} 
